@@ -1,0 +1,77 @@
+
+<div class="row justify-content-center">
+    <div class="col-xl-6 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <!--<div class="col-lg-5 d-none d-lg-block bg-register-image"></div>-->
+            
+
+            
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-8">
+                        <div class="p-8">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4"><%= __('createaccount') %></h1>
+                                <% if (locals.validation_error!=undefined) { %>
+                                    <%- include('./partials/_mesaj')  %>
+                                <% } %>
+                            </div>
+                            <form class="user" action="\register" method="post">
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="text" value="<%= typeof ad != 'undefined' ? ad : ''%>" name="ad" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="<%= __('name') %>">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" value="<%= typeof soyad != 'undefined' ? soyad : ''%>" name="soyad" class="form-control form-control-user" id="exampleLastName"
+                                            placeholder="<%= __('surname') %>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="form-group">
+                                    <input type="email" value="<%= typeof mail != 'undefined' ? mail : ''%>" name="mail" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="<%= __('email') %>">
+                                </div>
+                                <br>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" value="<%= typeof sifre != 'undefined' ? sifre : ''%>" name="sifre" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="<%= __('password') %>">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" value="<%= typeof resifre != 'undefined' ? resifre : ''%>" name="resifre" class="form-control form-control-user"
+                                            id="exampleRepeatPassword" placeholder="<%= __('repassword') %>">
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-primary " >
+                                        <%= __('regaccount') %>
+                                    </button>
+                                </div>
+                                <!--
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Register with Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                                </a>
+                                -->
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="/forget-password"><%= __('forgotpass') %></a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="/login"><%= __('accountexist') %></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

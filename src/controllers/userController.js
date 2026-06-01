@@ -1,0 +1,51 @@
+const userService = require('../services/userService');
+
+/*exports.getAllUsers = async (req, res) => {
+  
+  try {
+    const users = await userService.getAllUsers();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.createUser = async (req, res) => {
+  try {
+    const user = await userService.createUser(req.body);
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.updateUser = async (req, res) => {
+  try {
+    const user = await userService.updateUser(req.params.id, req.body);
+    if (!user) return res.status(404).json({ error: "Kullanıcı bulunamadı" });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    const deleted = await userService.deleteUser(req.params.id);
+    if (!deleted) return res.status(404).json({ error: "Kullanıcı bulunamadı" });
+    res.json({ message: "Kullanıcı silindi" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};*/
+
+exports.indexSayfasiGoster = (req,res,next)=>{
+    try{
+      res.render('index',{user:req.user,layout:'./layouts/main_layout.ejs'});
+    }catch{
+      res.status(500);
+      console.log("Ana sayfa gösterilemedi");
+    }
+    
+};
+

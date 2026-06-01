@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/admin/img/2e.png">
+    <title>2E Grup</title>
+    <meta name="description" content="2E Grup" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="/admin/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/admin/css/headers.css" rel="stylesheet" />   
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+     <link 
+      rel="stylesheet" 
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+      crossorigin="anonymous" 
+      referrerpolicy="no-referrer" 
+    />
+  </head>
+  <main>    
+    <header class="nav-wrap">
+      <nav class="container navbar">
+        <a href="/" class="d-flex align-items-center text-decoration-none">
+          <img src="/admin/img/2egrup.jpeg" width="101" height="45" alt="2E Grup Logo" />
+        </a>
+        <button class="mobile-toggle" aria-label="Menüyü aç" onclick="document.querySelector('.nav-links').classList.toggle('open')">☰</button>
+        <div class="nav-links">
+          <a href="#cozumler">Çözümler</a>
+          <a href="#kategoriler">Kategoriler</a>
+          <a href="#surec">Nasıl Çalışırız?</a>
+          <a href="#iletisim">İletişim</a>
+        </div>
+                
+        <div class="dropdown text-end">
+          <% let urole = user && user.role ? user.role : 'nouser'; %>
+          
+          <a href="#" class="dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="/uploads/avatars/<%= user && user.avatar ? user.avatar : 'Empty_Default.png' %>" 
+                alt="Profile" width="32" height="32" class="rounded-circle me-2" />
+            <!-- Ok simgesi otomatik gelir, ikonun sağında -->
+          </a>
+          
+          <ul class="dropdown-menu text-small dropdown-menu-end" style="font-size: 0.8rem;">
+            <% if (urole === 'nouser') { %>
+              <%- include('../partials/_menu_nouser') %>
+            <% } else if (urole === 'GG_Admin') { %>
+              <%- include('../partials/_menu_admin') %>
+            <% } else { %>
+              <%- include('../partials/_menu_user') %>
+            <% } %>
+          </ul>
+        </div>
+
+
+      </nav>
+    </header>
+    
+    <%- body %>
+    <footer class="footer" id="iletisim">
+    <div class="container footer-grid">
+      <div><h3>2E Grup</h3><p>Enerji, zayıf akım, fiber, data, yangın, güvenlik ve endüstriyel kablo çözümleri.</p></div>
+      <div></div>
+      <div><b>İletişim:</b><div>+90 216 461 27 40</div><a href="mailto:2e@2egrup.net">2e@2egrup.net</a><p>Esenevler Mah. 3014 Sok. No:15 Ümraniye / İstanbul / Türkiye</p></div>      
+    </div>
+    <div class="container footer-bottom">© 2026 2E Grup</div>
+  </footer>
+    <script src="/admin/js/bootstrap.bundle.min.js"></script>
+  </main>
+  
+
+  <!-- Logout Modal -->
+    <div class="modal" id="logoutModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title"><%= __('loheader') %></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <p><%= __('loinfo') %></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __('cancel') %></button>
+            <a class="btn btn-primary" href="/logout"><%= __('logout') %></a>
+          </div>
+        </div>
+      </div>
+    </div>
+</html>

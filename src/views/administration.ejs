@@ -1,0 +1,132 @@
+ 
+<div class="row justify-content-center">
+    <div class="col-xl-9 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-3">
+            <div class="card-body p-6">
+                <form class="user">    
+                    <h2 class="border-bottom text-center fw-semibold"> <%= __('admini') %> </h2>                    
+                    <h4 class="text-left"> <%= __('usermn') %> </h4>
+                    <hr>                
+                    <a href="\addnewuser" class="btn btn-success "> 
+                        <div  style=" font-size:medium" > <%= __('adduser') %></div>                           
+                    </a>
+                    <% if (locals.validation_error!=undefined || locals.success_message!=undefined || locals.login_error!=undefined  ) { %>                                     
+                        <%- include('./partials/_mesaj')%>
+                    <% } %>  
+                    <div>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                <th scope="col">#</th>
+                                <th scope="col"><%= __('name') %></th>
+                                <th scope="col"><%= __('surname') %></th>
+                                <th scope="col"><%= __('email') %></th>
+                                <th scope="col"><%= __('aroles') %></th>
+                                <th scope="col"><%= __('status') %></th>
+                                <th scope="col">#</th>
+                                </tr>
+                            </thead>
+                           <tbody>
+                                <% if (Array.isArray(users)) { %>
+                                    <% users.forEach((listedUser, index) => { %>
+                                    <tr data-id="<%= listedUser.id %>">
+                                        <th scope="row"><%= index + 1 %></th>
+                                        <td><%= listedUser.ad %></td>
+                                        <td><%= listedUser.soyad %></td>
+                                        <td><%= listedUser.mail %></td>
+                                        <td><%= listedUser.role %></td>
+                                        <% let st= listedUser.emailAktif; %>
+                                        <% if (st){ %>
+                                            <td><%= __('true') %></td>
+                                        <% } else { %>
+                                            <td><%= __('false') %></td>    
+                                        <% }; %>
+                                        
+                                        <td>                                            
+                                            <div class="dropdown text-end">
+                                                <a href="#" class="fa-solid fa-ellipsis link-body-emphasis text-decoration-none" 
+                                                    data-bs-toggle="dropdown" aria-expanded="false"></a>
+                                                <ul class="dropdown-menu text-small">
+                                                    <li><a class="dropdown-item" href="/edit-user/<%= listedUser.id %>"><%= __('edituser') %></a></li>
+                                                   <li>
+                                                        <a class="dropdown-item" href="#"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deleteUser"
+                                                                data-userid="<%= listedUser.id %>">
+                                                                <%= __('deleteuser') %>
+                                                        </a>
+                                                    </li>
+
+                                                    <% if (listedUser.emailAktif) {%>
+                                                    <li><a class="dropdown-item" href="/resetpassword/<%= listedUser.id %>"><%= __('resetpassword') %></a></li> 
+                                                    <% } %>                                                   
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr><td colspan="6">Kullanıcı bulunamadı</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                </div>
+              </form>
+            </div>
+         </div>
+    </div>
+
+
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteUserLabel"><%= __('deleteuser') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= __('close') %>"></button>
+      </div>
+      <div class="modal-body">
+        <p><%= __('areyousuredelete') %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __('cancel') %></button>
+        <form id="deleteForm" method="POST">
+          <button type="submit" class="btn btn-danger"><%= __('confirmdelete') %></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var deleteModal = document.getElementById('deleteUser');
+  console.log(deleteModal);
+
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    if (!button) return;
+
+    var userId = button.dataset.userid; // modern kullanım
+
+    if (!userId) {
+      console.warn("userId bulunamadı!");
+      return;
+    }
+
+    document.getElementById('deleteForm').action = '/delete-user/' + userId;
+  });
+});
+</script>
+
+
+
+
+
+</div>
+
