@@ -1,6 +1,6 @@
 const express = require('express');
 const sequelize = require('./src/config/database');
-const userRoutes = require('./src/routes/userRoutes');
+const mainRoutes = require('./src/routes/mainRoutes');
 const authRoutes = require('./src/routes/authRoutes');
 const mngRoutes=require("./src/routes/mngRoutes")
 const passport = require('passport');
@@ -106,7 +106,7 @@ app.use((req, res, next) => {
 
 
 // Rotalar
-app.use('/', userRoutes);
+app.use('/', mainRoutes);
 app.use('/', authRoutes);
 app.use('/', mngRoutes);
 

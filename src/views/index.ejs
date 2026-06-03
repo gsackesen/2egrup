@@ -58,12 +58,26 @@
       </div>
     </section>
 
+
+
+
     <section id="kategoriler" style="padding-top:0">
       <div class="container">
         <div class="section-head">
-          <h2>Ürün kategorileri</h2>
-          <p>Uzun ve karışık menü yerine kart tabanlı, okunabilir ve mobil uyumlu kategori yapısı.</p>
+          <h2><%= __('productcategories') %></h2>
+          <!--<p>Uzun ve karışık menü yerine kart tabanlı, okunabilir ve mobil uyumlu kategori yapısı.</p>-->
         </div>
+
+        <div class="categories">
+          <% kategoriler.forEach(cat => { %>
+            <a class="category" href="#">
+              <b><%= cat.kategori %></b>
+              <span><%= cat.aciklama %></span>
+              <small><%= __('view') %> →</small>
+            </a>
+          <% }) %>
+        </div>
+        <!--
         <div class="categories">
           <a class="category" href="#"><b>Enerji Kabloları</b><span>NYY, XLPE, ALPEK, özel kesitler</span><small>İncele →</small></a>
           <a class="category" href="#"><b>Yangın Kabloları</b><span>FE180, E30/E90, halogen free</span><small>İncele →</small></a>
@@ -73,9 +87,13 @@
           <a class="category" href="#"><b>Silikon Kablolar</b><span>Isıya dayanıklı kablo seçenekleri</span><small>İncele →</small></a>
           <a class="category" href="#"><b>Koaksiyel Kablolar</b><span>Uydu, TV, anten, telsiz</span><small>İncele →</small></a>
           <a class="category" href="#"><b>Güvenlik Kabloları</b><span>Kamera, ses, görüntü sistemleri</span><small>İncele →</small></a>
-        </div>
+        </div> -->
       </div>
     </section>
+
+
+
+
 
     <section id="teklif">
       <div class="container">

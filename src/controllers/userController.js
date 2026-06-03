@@ -1,6 +1,10 @@
-const userService = require('../services/userService');
+const { assign } = require('nodemailer/lib/shared');
+const categoryService = require('../services/categoryService');
+const i18n = require('i18n');
+// const userService = require('../services/userService');
 
-/*exports.getAllUsers = async (req, res) => {
+/*
+exports.getAllUsers = async (req, res) => {
   
   try {
     const users = await userService.getAllUsers();
@@ -39,9 +43,14 @@ exports.deleteUser = async (req, res) => {
   }
 };*/
 
-exports.indexSayfasiGoster = (req,res,next)=>{
+exports.indexSayfasiGoster =  async (req,res,next)=>{
+    
+    const lang = req.headers['accept-language'].split('-')[0].trim();
+
+    const kategoriler = await categoryService.getCategoriesByLang(lang);
+
     try{
-      res.render('index',{user:req.user,layout:'./layouts/main_layout.ejs'});
+      res.render('index',{user:req.user,kategoriler,layout:'./layouts/main_layout.ejs'});
     }catch{
       res.status(500);
       console.log("Ana sayfa gösterilemedi");

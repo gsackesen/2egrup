@@ -1,0 +1,149 @@
+ 
+<div class="row justify-content-center">
+    <div class="col-xl-9 col-lg-12 col-md-9">
+        <div class="card o-hidden border-0 shadow-lg my-3">
+            <div class="card-body p-6">
+                <form class="user">    
+                    <h2 class="border-bottom text-center fw-semibold"> <%= __('kategori') %> </h2>                    
+                                 
+                    <div class="d-flex justify-content-between align-items-center">
+                        <!-- Sol tarafta buton -->
+                        <a href="\addnewcategory" class="btn btn-success"> 
+                            <div style="font-size:medium"><%= __('addcategory') %></div>                           
+                        </a>
+
+                        <!-- Sağ tarafta dil seçimi -->
+                        <div class="d-flex align-items-center" style="margin-right:2rem;">
+                            <label for="dil" class="me-2"><%= __('language') %></label>
+                            <div class="arrow">
+                                <select name="dil" id="languageFilter" class="bg-light">
+                                    <option value="all" selected>All</option>
+                                    <option value="en">en</option>                                        
+                                    <option value="tr">tr</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <% if (locals.validation_error!=undefined || locals.success_message!=undefined || locals.login_error!=undefined  ) { %>                                     
+                        <%- include('./partials/_mesaj')%>
+                    <% } %>  
+                    <br>
+                    <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                <th style="position: sticky; top: 0; background: #212529; color: #fff;" scope="col">#</th>
+                                <th style="position: sticky; top: 0; background: #212529; color: #fff;" scope="col"><%= __('kategori') %></th>
+                                <th style="position: sticky; top: 0; background: #212529; color: #fff;" scope="col"><%= __('aciklama') %></th>   
+                                <th style="position: sticky; top: 0; background: #212529; color: #fff;" scope="col"><%= __('language') %></th>                                
+                                <th style="position: sticky; top: 0; background: #212529; color: #fff;" scope="col">#</th>
+                                </tr>
+                            </thead>
+                           <tbody>
+                                <% if (Array.isArray(kategori)) { %>
+                                    <% kategori.forEach((listedKategori, index) => { %>
+                                    <tr data-id="<%= listedKategori.id %>">
+                                        <th scope="row"><%= index + 1 %></th>
+                                        <td><%= listedKategori.kategori %></td>
+                                        <td><%= listedKategori.aciklama %></td>                                        
+                                        <td><%= listedKategori.dil %></td>                                        
+                                        <td>                                            
+                                            <div class="dropdown text-left">
+                                                <a href="#" class="fa-solid fa-ellipsis link-body-emphasis text-decoration-none"   
+                                                    data-bs-toggle="dropdown" aria-expanded="false"></a>
+                                                <ul class="dropdown-menu text-small">
+                                                    <li><a class="dropdown-item" href="/editcategory/<%= listedKategori.id %>"><%= __('edit') %></a></li>
+                                                   <li>
+                                                        <a class="dropdown-item" href="#"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#deleteKategori"
+                                                                data-id="<%= listedKategori.id %>">
+                                                                <%= __('delete') %>
+                                                        </a>
+                                                    </li>                                                                                                      
+                                                </ul>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <% }) %>
+                                <% } else { %>
+                                    <tr><td colspan="6">Kategori bulunamadı</td></tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr>
+                </div>
+              </form>
+            </div>
+         </div>
+    </div>
+
+
+<script>
+    document.getElementById('languageFilter').addEventListener('change', function() {
+    const selectedLang = this.value;
+    const rows = document.querySelectorAll('table tbody tr');
+
+    rows.forEach(row => {
+        const langCell = row.cells[3]; // Dil sütunu
+        if (selectedLang === 'all' || langCell.textContent.trim() === selectedLang.trim()) {
+        row.style.display = '';
+        } else {
+        row.style.display = 'none';
+        }
+    });
+    });
+</script>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="deleteKategori" tabindex="-1" aria-labelledby="deleteUserLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteCategoriLabel"><%= __('deletecategory') %></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="<%= __('close') %>"></button>
+      </div>
+      <div class="modal-body">
+        <p><%= __('areyousuredelete') %></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><%= __('cancel') %></button>
+        <form id="deleteForm" method="POST">
+          <button type="submit" class="btn btn-danger"><%= __('confirmdelete') %></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var deleteModal = document.getElementById('deleteCategory');
+  console.log(deleteModal);
+
+  deleteModal.addEventListener('show.bs.modal', function (event) {
+    var button = event.relatedTarget;
+    if (!button) return;
+
+    var Id = button.dataset.id; // modern kullanım
+
+    if (!Id) {
+      console.warn("Kategori Id bulunamadı!");
+      return;
+    }
+
+    document.getElementById('deleteForm').action = '/delete-category/' + Id;
+  });
+});
+</script>
+
+
+
+
+
+</div>
+

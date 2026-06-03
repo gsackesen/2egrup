@@ -85,7 +85,22 @@ const validateNewPassword = () => {
             })
         ];
 };
-
+const validateKategori = () => {
+    return[
+        body('kategori')
+            .trim()
+            .isLength({min:3}).withMessage('caterror1')
+            .isLength({max:150}).withMessage('caterror2'),
+        body('aciklama')
+            .trim()
+            .isLength({min:3}).withMessage('caterror3')
+            .isLength({max:150}).withMessage('caterror4'),
+        body('dil')
+            .trim()
+            .isLength({min:2}).withMessage('caterror5')
+            .isLength({max:15}).withMessage('caterror6'),
+        ];
+};
 
        
 
@@ -94,5 +109,6 @@ module.exports ={
     validateLogin,
     validateMail,
     validateNewPassword,
-    validateEditUser   
+    validateEditUser,
+    validateKategori   
 };

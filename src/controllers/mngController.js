@@ -132,8 +132,7 @@ const newUserKaydet=async(req,res) => {
 };  
 
 
-const userFormuGoster=async(req,res) => {
-    console.log(req.params.id);
+const userFormuGoster=async(req,res) => {    
     const userId = req.params.id;
     const selectedUser=await User.getUserById(userId);
     res.render('edit-user',{user:req.user,userId,selectedUser,layout:'./layouts/main_layout.ejs'});   
